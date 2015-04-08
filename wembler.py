@@ -42,9 +42,9 @@ import assemblyline
 
 
 class Wembler:
-    def __init__(self):
+    def __init__(self, config):
         self._parse_cli_args()
-        self._load_config()
+        self._load_config(config)
 
     def _parse_cli_args(self):
         cliparser = argparse.ArgumentParser(description=
@@ -55,9 +55,10 @@ class Wembler:
                          '(default: %(default)s)')
         self.cliargs = cliparser.parse_args()
 
-    def _load_config(self):
-        with open(self.cliargs.config, 'r') as cf:
-            config = yaml.load(cf)
+    def _load_config(self, config):
+        if not config:
+            with open(self.cliargs.config, 'r') as cf:
+                config = yaml.load(cf)
         workersN = config['max_threads']
         begin_inputs = config['begin_inputs']
         stations = {}
@@ -82,4 +83,4 @@ class Wembler:
         self.factory.begin()
 
 if __name__ == '__main__':
-    Wembler().build()
+    Wembler(None).build()
