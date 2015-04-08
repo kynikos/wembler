@@ -71,7 +71,8 @@ class Wembler:
             del taskconf['input']
             del taskconf['outputs']
             try:
-                Process = import_module('.'.join(('processes', pname))).Process
+                Process = import_module('.'.join(
+                                    ('wembler.processes', pname))).Process
             except ImportError:
                 Process = import_module('.'.join(
                                     ('assemblyline.processes', pname))).Process
@@ -81,6 +82,3 @@ class Wembler:
 
     def build(self):
         self.factory.begin()
-
-if __name__ == '__main__':
-    Wembler(None).build()
