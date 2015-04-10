@@ -25,9 +25,8 @@ import sass
 
 
 class Process:
-    def __init__(self, inputdir, outputdir, urlprefix, style):
+    def __init__(self, inputdir, urlprefix, style):
         self.inputdir = inputdir
-        self.outputdir = outputdir
         self.urlprefix = urlprefix or ""
         self.style = style
 
@@ -35,17 +34,13 @@ class Process:
         # TODO: This should be generalized...
         fname = os.path.splitext(item)[0]
         scssf = ".".join((fname, "scss"))
-        cssf = ".".join((fname, "css"))
         css = sass.compile(filename=os.path.join(self.inputdir, scssf),
                            output_style=self.style,
                            custom_functions={
                                 sass.SassFunction('relurl', ('$url', ),
                                                   self._relurl),
                             })
-        with open(os.path.join(self.outputdir, cssf), 'w') as of:
-            of.write(css)
-
-        yield (item, )
+        yield ((item, css), )
 
     def _relurl(self, url):
         return "url('{}')".format(os.path.join(self.urlprefix,

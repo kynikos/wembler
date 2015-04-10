@@ -29,11 +29,12 @@ class Process:
         self.base_prefix = base_prefix
 
     def process(self, item):
-        base_url = os.path.join(self.base_prefix, item) \
+        page, css = item
+        base_url = os.path.join(self.base_prefix, page) \
                    if self.base_prefix else None
-        self.env.get_template(item).stream(
-            page=item,
+        self.env.get_template(page).stream(
+            css=css,
+            page=page,
             base_url=base_url,
-        ).dump(os.path.join(self.outputdir, os.path.basename(item)))
-
+        ).dump(os.path.join(self.outputdir, os.path.basename(page)))
         yield ()
