@@ -25,6 +25,7 @@ import assemblyline
 
 # TODO: JS minifier
 # TODO: Remember to mention python-yaml and assemblyline in the dependencies
+#       Also mention the dependencies for the various bundled processes
 # TODO: Allow using custom processes from a local folder
 #     test = """
 #     import sys
