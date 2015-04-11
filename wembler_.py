@@ -29,6 +29,8 @@ def _parse_cli_args():
                 default='./wembler.yaml', type=str, metavar='FILE',
                 help='the path to the configuration file '
                      '(default: %(default)s)')
+    cliparser.add_argument('--debug', action='store_true',
+                help='enable debug mode')
     return vars(cliparser.parse_args())
 
 Wembler(**_parse_cli_args()).build()
