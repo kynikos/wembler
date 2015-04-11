@@ -18,7 +18,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Wembler.  If not, see <http://www.gnu.org/licenses/>.
 
-import argparse
 from importlib import import_module
 import yaml
 import assemblyline
@@ -43,22 +42,11 @@ import assemblyline
 
 
 class Wembler:
+    # The parameters for __init__ must reflect the attributes set through
+    # argparse by the launcher script
     def __init__(self, config):
-        self._parse_cli_args()
-        self._load_config(config)
-
-    def _parse_cli_args(self):
-        cliparser = argparse.ArgumentParser(description=
-                "Wembler - Progressive website assembler", add_help=True)
-        cliparser.add_argument('-c', '--config', action='store',
-                    default='./wembler.yaml', type=str, metavar='FILE',
-                    help='the path to the configuration file '
-                         '(default: %(default)s)')
-        self.cliargs = cliparser.parse_args()
-
-    def _load_config(self, config):
-        if not config:
-            with open(self.cliargs.config, 'r') as cf:
+        if not isinstance(config, dict):
+            with open(config, 'r') as cf:
                 config = yaml.load(cf)
         workersN = config['max_threads']
         begin_inputs = config['begin_inputs']
