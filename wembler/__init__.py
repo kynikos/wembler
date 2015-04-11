@@ -53,26 +53,27 @@ class Wembler:
         if not isinstance(config, dict):
             with open(config, 'r') as cf:
                 config = yaml.load(cf)
-        TEMPLATE_DIR = "./templates"
-        workersN = 12
+        WORKERS = 12
         if debug:
-            url_prefix = ""
+            url_prefix = ''
             css_style = 'nested'
         else:
-            url_prefix = config["url_prefix"]
+            url_prefix = config['url_prefix']
             css_style = 'compressed'
-        stations = {}
-        stations["loader"] = (_Loader(
-                                  basedir=TEMPLATE_DIR,
-                              ), None, ("templates", ))
-        stations["simple"] = (_SimpleStaticWebsite(
-                                  template_dir=TEMPLATE_DIR,
-                                  url_prefix=url_prefix,
-                                  css_dir='./scss',
-                                  css_style=css_style,
-                                  output_dir='www',
-                              ), "templates", ())
-        self.factory = assemblyline.Factory(workersN, stations)
+        TEMPLATE_DIR = './templates'
+        stations = (
+            (_Loader(
+                basedir=TEMPLATE_DIR,
+             ), None, ('templates', )),
+            (_SimpleStaticWebsite(
+                template_dir=TEMPLATE_DIR,
+                url_prefix=url_prefix,
+                css_dir='./scss',
+                css_style=css_style,
+                output_dir='www',
+             ), 'templates', ()),
+        )
+        self.factory = assemblyline.Factory(WORKERS, stations)
 
     def build(self):
         self.factory.begin()
