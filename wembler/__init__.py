@@ -27,7 +27,7 @@ from . import processes
 class Wembler:
     # The parameters for __init__ must reflect the attributes set through
     # argparse by the launcher script
-    def __init__(self, config, debug=False):
+    def __init__(self, Model, config, debug=False):
         # TODO: Make more values configurable
         # TODO: Allow using custom processes from a local folder
         #     test = """
@@ -53,7 +53,7 @@ class Wembler:
         else:
             url_prefix = config['url_prefix']
             css_style = 'compressed'
-        stations = SimpleStaticWebsite(url_prefix, css_style)
+        stations = Model(url_prefix, css_style)
         self.factory = assemblyline.Factory(WORKERS, stations)
 
     def build(self):
