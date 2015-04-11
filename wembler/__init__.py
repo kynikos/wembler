@@ -60,23 +60,27 @@ class Wembler:
         else:
             url_prefix = config['url_prefix']
             css_style = 'compressed'
-        TEMPLATE_DIR = './templates'
-        stations = (
-            (_Loader(
-                basedir=TEMPLATE_DIR,
-             ), None, ('templates', )),
-            (_SimpleStaticWebsite(
-                template_dir=TEMPLATE_DIR,
-                url_prefix=url_prefix,
-                css_dir='./scss',
-                css_style=css_style,
-                output_dir='www',
-             ), 'templates', ()),
-        )
+        stations = SimpleStaticWebsite(url_prefix, css_style)
         self.factory = assemblyline.Factory(WORKERS, stations)
 
     def build(self):
         self.factory.begin()
+
+
+def SimpleStaticWebsite(url_prefix, css_style):
+    TEMPLATE_DIR = './templates'
+    return (
+        (_Loader(
+            basedir=TEMPLATE_DIR,
+         ), None, ('templates', )),
+        (_SimpleStaticWebsite(
+            template_dir=TEMPLATE_DIR,
+            url_prefix=url_prefix,
+            css_dir='./scss',
+            css_style=css_style,
+            output_dir='www',
+         ), 'templates', ()),
+    )
 
 
 class _Loader:
