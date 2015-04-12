@@ -42,5 +42,31 @@ class HTMLContent:
 
     def process(self, template):
         css = self.sass.compile(template)
-        self.jinja.render(template, css)
+        self.jinja.render(template, None, None, css, template)
+        yield ()
+
+
+class MarkdownContent:
+    def __init__(self, article_dir, template_dir, base_template, url_prefix,
+                 css_dir, css_style, output_dir):
+        self.jinja = subprocesses.Jinja(template_dir, url_prefix, output_dir)
+        self.sass = subprocesses.Sass(template_dir, url_prefix, css_dir,
+                                      css_style)
+        self.markdown = subprocesses.Markdown(article_dir)
+        self.base_template = base_template
+        self.htmlparser = subprocesses.TitleFinder()
+
+    def process(self, article):
+        content = self.markdown.convert(article)
+        try:
+            self.htmlparser.feed(content)
+        except subprocesses.TitleFound as exc:
+            title = exc.data
+        else:
+            # TODO: Raise better exception or use a default title
+            raise UserWarning()
+        css = self.sass.compile(self.base_template)
+        fname = os.path.splitext(article)[0]
+        outfile = ".".join((fname, "html"))
+        self.jinja.render(self.base_template, title, content, css, outfile)
         yield ()

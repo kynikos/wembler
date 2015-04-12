@@ -41,14 +41,16 @@ class Jinja:
             autoescape=True
         )
 
-    def render(self, template, css):
-        base_url = os.path.join(self.url_prefix, template) \
+    def render(self, template, title, content, css, outfile):
+        base_url = os.path.join(self.url_prefix, outfile) \
                    if self.url_prefix else None
         self.env.get_template(template).stream(
+            title=title,
+            content=content,
             css=css,
             page=template,
             base_url=base_url,
-        ).dump(os.path.join(self.output_dir, os.path.basename(template)))
+        ).dump(os.path.join(self.output_dir, os.path.basename(outfile)))
 
 
 class Sass:
