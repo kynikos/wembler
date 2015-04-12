@@ -103,6 +103,8 @@ class TitleFound(UserWarning):
 
 
 class TitleFinder(html.parser.HTMLParser):
+    # TODO: TitleFinder should be replaced with a Markdown extension
+    #       https://pythonhosted.org/Markdown/extensions/api.html
     def __init__(self):
         html.parser.HTMLParser.__init__(self, convert_charrefs=True)
 

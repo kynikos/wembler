@@ -54,6 +54,8 @@ class MarkdownContent:
                                       css_style)
         self.markdown = subprocesses.Markdown(article_dir)
         self.base_template = base_template
+        # TODO: TitleFinder should be replaced with a Markdown extension
+        #       https://pythonhosted.org/Markdown/extensions/api.html
         self.htmlparser = subprocesses.TitleFinder()
 
     def process(self, article):
