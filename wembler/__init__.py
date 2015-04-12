@@ -66,7 +66,7 @@ def SimpleStatic(url_prefix, css_style):
         (processes.FileLoader(
             basedir=TEMPLATE_DIR,
          ), None, ('templates', )),
-        (processes.JinjaSass(
+        (processes.HTMLContent(
             template_dir=TEMPLATE_DIR,
             url_prefix=url_prefix,
             css_dir='./scss',
