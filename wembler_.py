@@ -19,7 +19,7 @@
 # along with Wembler.  If not, see <http://www.gnu.org/licenses/>.
 
 import argparse
-from wembler import Wembler, SimpleStaticWebsite
+from wembler import Wembler, SimpleStatic
 
 
 def _parse_cli_args():
@@ -33,4 +33,4 @@ def _parse_cli_args():
                 help='enable debug mode')
     return vars(cliparser.parse_args())
 
-Wembler(SimpleStaticWebsite, **_parse_cli_args()).build()
+Wembler(SimpleStatic, **_parse_cli_args()).build()

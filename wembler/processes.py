@@ -39,7 +39,7 @@ class FileLoader:
                 yield (fname, )
 
 
-class SimpleStaticWebsite:
+class JinjaSass:
     # TODO: JS minifier
     def __init__(self, template_dir, url_prefix, css_dir, css_style,
                  output_dir):

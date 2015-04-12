@@ -60,13 +60,13 @@ class Wembler:
         self.factory.begin()
 
 
-def SimpleStaticWebsite(url_prefix, css_style):
+def SimpleStatic(url_prefix, css_style):
     TEMPLATE_DIR = './templates'
     return (
         (processes.FileLoader(
             basedir=TEMPLATE_DIR,
          ), None, ('templates', )),
-        (processes.SimpleStaticWebsite(
+        (processes.JinjaSass(
             template_dir=TEMPLATE_DIR,
             url_prefix=url_prefix,
             css_dir='./scss',
