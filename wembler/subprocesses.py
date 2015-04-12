@@ -135,7 +135,9 @@ class Markdown:
     def convert(self, article):
         with open(os.path.join(self.article_dir, article), 'r') as stream:
             self.md.reset()
-            return self.md.convert(stream.read())
+            # TODO: Find a better way to automatically add a ToC
+            text = '[TOC]\n\n' + stream.read()
+            return self.md.convert(text)
 
 
 class TitleFound(UserWarning):
