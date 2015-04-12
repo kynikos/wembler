@@ -74,3 +74,21 @@ def SimpleStatic(url_prefix, css_style):
             output_dir='www',
          ), 'templates', ()),
     )
+
+
+def Wiklog(url_prefix, css_style):
+    ARTICLE_DIR = './articles'
+    return (
+        (processes.FileLoader(
+            basedir=ARTICLE_DIR,
+         ), None, ('articles', )),
+        (processes.MarkdownContent(
+            article_dir=ARTICLE_DIR,
+            template_dir='./templates',
+            base_template='article.html',
+            url_prefix=url_prefix,
+            css_dir='./scss',
+            css_style=css_style,
+            output_dir='www',
+         ), 'articles', ())
+    )
