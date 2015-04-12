@@ -85,11 +85,53 @@ class Sass:
 
 class Markdown:
     # Documentation: https://pythonhosted.org/Markdown/reference.html
-    #                https://pythonhosted.org/Markdown/extensions/index.html
+    # TODO: Try https://github.com/lepture/mistune
     def __init__(self, article_dir):
         self.article_dir = article_dir
-        self.md = markdown.Markdown()  # TODO: See the available options and
-                                       #       extensions
+
+        def url_builder(label, base, end):
+            # TODO: implement
+            return base + label + end
+
+        self.md = markdown.Markdown(
+            output_format='html5',
+            tab_length=4,
+            enable_attributes=False,
+            smart_emphasis=True,
+            lazy_ol=False,
+            # See https://pythonhosted.org/Markdown/extensions/index.html
+            # for configuration options
+            extensions=['markdown.extensions.extra',
+                        # extra includes the following
+                        #'markdown.extensions.abbr',
+                        #'markdown.extensions.attr_list',
+                        #'markdown.extensions.def_list',
+                        #'markdown.extensions.fenced_code',
+                        #'markdown.extensions.footnotes',
+                        #'markdown.extensions.tables',
+                        #'markdown.extensions.smart_strong',
+                        'markdown.extensions.admonition',
+                        'markdown.extensions.codehilite',
+                        'markdown.extensions.meta',
+                        'markdown.extensions.nl2br',
+                        'markdown.extensions.sane_lists',
+                        'markdown.extensions.smarty',
+                        'markdown.extensions.toc',
+                        'markdown.extensions.wikilinks'],
+            extension_configs={
+                'markdown.extensions.toc': {
+                    'title': 'Table of contents:',
+                    # TODO: Note how e.g. Sphinx makes the para symbol appear
+                    #       only when hovering over the heading!
+                    'permalink': True,
+                    # TODO: set the 'slugify' option for a custom function to
+                    #       generate anchors
+                },
+                'markdown.extensions.wikilinks': {
+                    'build_url': url_builder,
+                }
+            },
+        )
 
     def convert(self, article):
         with open(os.path.join(self.article_dir, article), 'r') as stream:
