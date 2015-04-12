@@ -18,6 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Wembler.  If not, see <http://www.gnu.org/licenses/>.
 
+# TODO: Add tests for wembler.{com,net,org} url redirects
 # TODO: Remember to mention python-yaml and assemblyline in the dependencies
 import yaml
 import assemblyline

@@ -24,8 +24,6 @@ import html.parser
 # TODO: Make the following dependencies optional
 import jinja2
 import sass
-# TODO: See also https://github.com/Kronuz/pyScss
-#       import scss
 import markdown
 
 
@@ -56,6 +54,7 @@ class Jinja:
 class Sass:
     # Documentation: http://hongminhee.org/libsass-python/
     # TODO: Contribute support for the .sass (indented) syntax
+    # TODO: See also https://github.com/Kronuz/pyScss
     def __init__(self, template_dir, url_prefix, css_dir, css_style):
         self.url_prefix = url_prefix
         self.css_dir = css_dir
@@ -102,7 +101,7 @@ class Markdown:
             # See https://pythonhosted.org/Markdown/extensions/index.html
             # for configuration options
             extensions=['markdown.extensions.extra',
-                        # extra includes the following
+                        # 'extra' includes the following extensions:
                         #'markdown.extensions.abbr',
                         #'markdown.extensions.attr_list',
                         #'markdown.extensions.def_list',
