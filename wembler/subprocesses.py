@@ -19,6 +19,8 @@
 # along with Wembler.  If not, see <http://www.gnu.org/licenses/>.
 
 import os.path
+import html.parser
+
 # TODO: Make the following dependencies optional
 import jinja2
 import sass
@@ -92,3 +94,19 @@ class Markdown:
             self.md.reset()
             return self.md.convert(stream.read())
 
+
+class TitleFound(UserWarning):
+    def __init__(self, data):
+        self.data = data
+
+
+class TitleFinder(html.parser.HTMLParser):
+    def __init__(self):
+        html.parser.HTMLParser.__init__(self, convert_charrefs=True)
+
+    def handle_starttag(self, tag, attrs):
+        self.current_tag = tag
+
+    def handle_data(self, data):
+        if self.current_tag == 'h1':
+            raise TitleFound(data)
