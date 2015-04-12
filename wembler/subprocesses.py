@@ -21,14 +21,13 @@
 import os.path
 # TODO: Make the following dependencies optional
 import jinja2
-# Documentation: http://hongminhee.org/libsass-python/
-# TODO: Contribute support for the .sass (indented) syntax
 import sass
 # TODO: See also https://github.com/Kronuz/pyScss
 #       import scss
 
 
 class Jinja:
+    # Documentation: http://jinja.pocoo.org/docs/dev/api/
     def __init__(self, template_dir, url_prefix, output_dir):
         self.url_prefix = url_prefix
         self.output_dir = output_dir
@@ -50,6 +49,8 @@ class Jinja:
 
 
 class Sass:
+    # Documentation: http://hongminhee.org/libsass-python/
+    # TODO: Contribute support for the .sass (indented) syntax
     def __init__(self, template_dir, url_prefix, css_dir, css_style):
         self.url_prefix = url_prefix
         self.css_dir = css_dir
