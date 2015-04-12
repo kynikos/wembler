@@ -24,6 +24,7 @@ import jinja2
 import sass
 # TODO: See also https://github.com/Kronuz/pyScss
 #       import scss
+import markdown
 
 
 class Jinja:
@@ -76,4 +77,18 @@ class Sass:
         if string_[0] == string_[-1] and string_.startswith(("'", '"')):
             return string_[1:-1]
         return string_
+
+
+class Markdown:
+    # Documentation: https://pythonhosted.org/Markdown/reference.html
+    #                https://pythonhosted.org/Markdown/extensions/index.html
+    def __init__(self, article_dir):
+        self.article_dir = article_dir
+        self.md = markdown.Markdown()  # TODO: See the available options and
+                                       #       extensions
+
+    def convert(self, article):
+        with open(os.path.join(self.article_dir, article), 'r') as stream:
+            self.md.reset()
+            return self.md.convert(stream.read())
 
